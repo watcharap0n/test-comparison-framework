@@ -14,7 +14,6 @@ class User(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias='_id')
     username: str = Field(
         ...,
-        regex='^(?![0-9._])(?!.*[._]$)(?!.*\d_)(?!.*_\d)[a-z0-9_]+$',
         description='Allow only alphabetic eng character & number endswith.'
     )
     firstname: Optional[str] = None
@@ -42,7 +41,6 @@ class ResponseUser(BaseModel):
 class UpdatedUser(BaseModel):
     username: str = Field(
         ...,
-        regex='^(?![0-9._])(?!.*[._]$)(?!.*\d_)(?!.*_\d)[a-z0-9_]+$',
         description='Allow only alphabetic eng character & number endswith.'
     )
     firstname: Optional[str] = None
