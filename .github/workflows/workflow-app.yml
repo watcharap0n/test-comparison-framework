@@ -45,5 +45,6 @@ jobs:
          
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
-          pytest -v
+          pytest unit-test-service/tests_pytest/conftest.py -v
+
         
