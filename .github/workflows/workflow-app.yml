@@ -8,6 +8,7 @@ jobs:
   DEV:
     name: Linter
     runs-on: ubuntu-latest
+    environment: Prod
 
     steps:
       - name: Linter Test
@@ -36,6 +37,7 @@ jobs:
           USER_AGENT: ${{ secrets.USER_AGENT }}
 
         run: |
+          echo "$PYTHONPATH $USER_AGENT"
           pytest unit-test-service/tests_pytest/conftest.py -vv -o log-cli=true
         
         
