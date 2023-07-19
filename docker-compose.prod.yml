@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  unit-test-service:
+    container_name: unittest-container
+    build: unit-test-service
+    image: kaneai/unit-test-service:latest
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.bak
+    networks:
+      - microservice_network
+
+  mongo:
+    container_name: mongo-db
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./unit-test-service/server/db/data:/data/db
+    networks:
+      - default
+
+  nginx:
+    container_name: fastapi_revers_proxy
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./.nginx_config.conf:/etc/nginx/sites-enabled/fastapi.conf
+    depends_on:
+      - unit-test-service
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name:
+        microservice_network

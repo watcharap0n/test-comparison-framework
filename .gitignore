@@ -1,0 +1,7 @@
+.idea
+*__pycache__
+Pipfile
+Pipfile.lock
+etc
+unit-test-service/server/db/data
+
