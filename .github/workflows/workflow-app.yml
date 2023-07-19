@@ -5,12 +5,18 @@ on:
     branches: [ master ]
 
 jobs:
-  DEV:
+  test:
     name: Linter
     runs-on: ubuntu-latest
     environment: Prod
 
     steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          
       - name: Linter Test
         env:
           GITHUB_RUN_ID: ${{ secrets.GITHUB_RUN_ID }}
@@ -38,5 +44,5 @@ jobs:
          
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
-          pytest tests_pytest -v
+          pytest -v
         
