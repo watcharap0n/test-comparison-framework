@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Linter Test
         env:
-          GITHUB_RUN_ID: ${{ secret.GITHUB_RUN_ID }}
-          GITHUB_REPOSITORY: ${{ secret.GITHUB_REPOSITORY }}
+          GITHUB_RUN_ID: ${{ secrets.GITHUB_RUN_ID }}
+          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           GITHUB_EVENT_NAME: ${{ secrets.GITHUB_EVENT_NAME }}
         run: echo "$GITHUB_RUN_ID $GITHUB_REPOSITORY $GITHUB_EVENT_NAME"
