@@ -25,8 +25,6 @@ payload = {
 def mock_mongo_client():
     # Create a mock MongoDB client using mongomock
     db = MongoClient()
-    database = db.__getattr__('testing')
-    collection = database.__getattr__('test')
     yield db
     # Cleanup after all tests are executed
     db.close()

@@ -5,9 +5,14 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  build:
     name: Linter
     runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
     environment: Prod
 
     steps:
@@ -42,7 +47,7 @@ jobs:
         env:
           PYTHONPATH: ${{ vars.PYTHONPATH }}
           USER_AGENT: ${{ secrets.USER_AGENT }}
-         
+
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
           pytest unit-test-service/tests_pytest/conftest.py -v
