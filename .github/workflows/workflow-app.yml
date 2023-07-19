@@ -33,9 +33,9 @@ jobs:
 
       - name: Unit Test
         env:
-          PYTHONPATH: ${{ secrets.PYTHONPATH }}
+          PYTHONPATH: ${{ vars.PYTHONPATH }}
           USER_AGENT: ${{ secrets.USER_AGENT }}
-
+         
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
           pytest -v
