@@ -38,6 +38,5 @@ jobs:
 
         run: |
           echo "$PYTHONPATH $USER_AGENT"
-          pytest unit-test-service/tests_pytest/conftest.py -vv -o log-cli=true
-        
+          pytest -v
         
