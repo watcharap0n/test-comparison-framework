@@ -37,6 +37,6 @@ jobs:
           USER_AGENT: ${{ secrets.USER_AGENT }}
 
         run: |
-          echo "$PYTHONPATH $USER_AGENT"
-          pytest tests_pytest -v
+          echo "$PYTHONPATH $USER_AGENT $PWD"
+          pytest -v
         
