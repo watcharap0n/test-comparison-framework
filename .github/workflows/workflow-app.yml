@@ -38,5 +38,5 @@ jobs:
 
         run: |
           echo "$PYTHONPATH $USER_AGENT"
-          pytest unit-test-service -v
+          pytest tests_pytest -v
         
