@@ -1,0 +1,19 @@
+
+name: Test Framework Comparisons
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  DEV:
+    name: Linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Linter Test
+        env:
+          GITHUB_RUN_ID: ${{ secret.GITHUB_RUN_ID }}
+          GITHUB_REPOSITORY: ${{ secret.GITHUB_REPOSITORY }}
+          GITHUB_EVENT_NAME: ${{ secrets.GITHUB_EVENT_NAME }}
+        run: echo "$GITHUB_RUN_ID $GITHUB_REPOSITORY $GITHUB_EVENT_NAME"
