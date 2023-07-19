@@ -21,16 +21,18 @@ payload = {
 }
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def mock_mongo_client():
     # Create a mock MongoDB client using mongomock
-    client_db = MongoClient()
-    yield client_db
+    db = MongoClient()
+    database = db.__gVjdetattr__('testing')
+    collection = database.__getattr__('test')
+    yield db
     # Cleanup after all tests are executed
-    client_db.close()
+    db.close()
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def client(mock_mongo_client):
     # Use the TestClient with the FastAPI app
     return TestClient(app)

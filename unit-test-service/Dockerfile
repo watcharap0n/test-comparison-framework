@@ -12,6 +12,7 @@ RUN pip install -r requirements.txt \
     && rm -rf /root/.cache/pip
 
 COPY server .
+COPY tests_pytest .
 
 WORKDIR ../
 
