@@ -4,4 +4,6 @@ Pipfile
 Pipfile.lock
 etc
 unit-test-service/server/db/data
+*.tox
+*.coverage
 
