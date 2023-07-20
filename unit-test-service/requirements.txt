@@ -16,6 +16,7 @@ idna==3.4
 iniconfig==2.0.0
 mangum==0.17.0
 mongomock==4.1.2
+nose2==0.13.0
 packaging==23.1
 passlib==1.7.4
 pluggy==1.2.0
