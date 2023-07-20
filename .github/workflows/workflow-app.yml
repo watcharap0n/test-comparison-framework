@@ -43,7 +43,7 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Unit Test
+      - name: Unit Test with pytest
         env:
           PYTHONPATH: ${{ vars.PYTHONPATH }}
           USER_AGENT: ${{ secrets.USER_AGENT }}
@@ -90,7 +90,7 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Unit Test
+      - name: Unit Test with unittest
         env:
           PYTHONPATH: ${{ vars.PYTHONPATH }}
           USER_AGENT: ${{ secrets.USER_AGENT }}
@@ -98,6 +98,7 @@ jobs:
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
           python -m unittest unit-test-service/tests_unittest/conftest.py -vv
+          nose2 -s unit-test-service tests_unittest.conftest -vv
 
   dockerImage:
     name: Push Docker image to Docker hub
