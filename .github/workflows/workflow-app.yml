@@ -121,7 +121,7 @@ jobs:
         run: echo "$GITHUB_RUN_ID $GITHUB_REPOSITORY $GITHUB_EVENT_NAME"
 
       - uses: actions/checkout@v2
-      - name: Set up Python 3.10.12
+      - name: Set up Python 3.9.14
         uses: actions/setup-python@v2
         with:
           python-version: "3.9.14"
@@ -133,7 +133,7 @@ jobs:
           python-version: "3.10.12"
 
       - uses: actions/checkout@v2
-      - name: Set up Python 3.10.12
+      - name: Set up Python 3.11.4
         uses: actions/setup-python@v2
         with:
           python-version: "3.11.4"
