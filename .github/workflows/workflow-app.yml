@@ -51,7 +51,6 @@ jobs:
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
           pytest unit-test-service/tests_pytest/conftest.py -vv -o log_cli=true
-          pytest --cov
 
   unittest:
     name: Linter and Unittest
@@ -102,7 +101,6 @@ jobs:
           python -m unittest unit-test-service/tests_unittest/conftest.py -vv
           nose2 -s unit-test-service tests_unittest.conftest -vv
   
-
   testByVersion:
     name: Run test with tox
     runs-on: ubuntu-latest
@@ -150,7 +148,7 @@ jobs:
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
           tox -r
-          
+  
   
   
 
