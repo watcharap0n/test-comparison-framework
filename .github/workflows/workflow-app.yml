@@ -5,8 +5,8 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    name: Linter
+  pytest:
+    name: linter and pytest
     runs-on: ubuntu-latest
     services:
       mongodb:
@@ -16,7 +16,7 @@ jobs:
     environment: Prod
 
     steps:
-      - name: Linter Test
+      - name: Linter & Pytest
         env:
           GITHUB_RUN_ID: ${{ secrets.GITHUB_RUN_ID }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
@@ -50,6 +50,39 @@ jobs:
 
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
-          pytest unit-test-service/tests_pytest/conftest.py -v
+          pytest unit-test-service/tests_pytest/conftest.py -vv -o log_cli=true
+
+  dockerImage:
+    name: Push Docker image to Docker hub
+    runs-on: ubuntu-latest
+    environment: Docker
+    needs: pytest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/test-comparison-framework
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
         
