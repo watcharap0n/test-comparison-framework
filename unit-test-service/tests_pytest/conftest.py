@@ -6,7 +6,6 @@ pytest
 
 import logging
 import os
-
 import pytest
 from fastapi import status
 from fastapi.testclient import TestClient
@@ -23,9 +22,11 @@ payload = {
 
 @pytest.fixture
 def mock_mongo_client():
+    # tear up
     # Create a mock MongoDB client using mongomock
     db = MongoClient()
     yield db
+    # tear down
     # Cleanup after all tests are executed
     db.close()
 
@@ -43,11 +44,11 @@ def authorization_header():
 
 @pytest.fixture
 def created_user_by_id(client, authorization_header):
+    # tear up
     response = client.post('/user/create', json=payload, headers=authorization_header)
     created_id = response.json()['_id']
     yield created_id
-    LOGGER.info(created_id)
-
+    # tear down
     client.delete(f'/user/delete/{created_id}', headers=authorization_header)
 
 
