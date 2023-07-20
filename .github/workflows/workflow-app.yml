@@ -124,7 +124,19 @@ jobs:
       - name: Set up Python 3.10.12
         uses: actions/setup-python@v2
         with:
+          python-version: "3.9.14"
+
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10.12
+        uses: actions/setup-python@v2
+        with:
           python-version: "3.10.12"
+
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10.12
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11.4"
 
       - name: Install dependencies
         run: |
@@ -150,8 +162,6 @@ jobs:
           tox -r
   
   
-  
-
   dockerImage:
     name: Push Docker image to Docker hub
     runs-on: ubuntu-latest
