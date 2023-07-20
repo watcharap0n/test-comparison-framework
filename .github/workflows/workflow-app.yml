@@ -51,6 +51,7 @@ jobs:
         run: |
           echo "$PYTHONPATH $USER_AGENT $PWD"
           pytest unit-test-service/tests_pytest/conftest.py -vv -o log_cli=true
+          pytest --cov
 
   unittest:
     name: Linter and Unittest
@@ -100,6 +101,56 @@ jobs:
           echo "$PYTHONPATH $USER_AGENT $PWD"
           python -m unittest unit-test-service/tests_unittest/conftest.py -vv
           nose2 -s unit-test-service tests_unittest.conftest -vv
+  
+
+  testByVersion:
+    name: Run test with tox
+    runs-on: ubuntu-latest
+    needs: unittest
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+    environment: Prod
+
+    steps:
+      - name: Build Python
+        env:
+          GITHUB_RUN_ID: ${{ secrets.GITHUB_RUN_ID }}
+          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+          GITHUB_EVENT_NAME: ${{ secrets.GITHUB_EVENT_NAME }}
+        run: echo "$GITHUB_RUN_ID $GITHUB_REPOSITORY $GITHUB_EVENT_NAME"
+
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10.12
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+          pip install cryptography==38.0.4
+          if [ -f unit-test-service/requirements.txt ]; then pip install -r unit-test-service/requirements.txt; fi
+
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run Test with tox
+        env:
+          PYTHONPATH: ${{ vars.PYTHONPATH }}
+          USER_AGENT: ${{ secrets.USER_AGENT }}
+
+        run: |
+          echo "$PYTHONPATH $USER_AGENT $PWD"
+          tox -r
+          
   
   
 
