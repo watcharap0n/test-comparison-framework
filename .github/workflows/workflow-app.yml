@@ -91,7 +91,7 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Unit Test with pytest
+      - name: Unit Test with unittest
         env:
           PYTHONPATH: ${{ vars.PYTHONPATH }}
           USER_AGENT: ${{ secrets.USER_AGENT }}
