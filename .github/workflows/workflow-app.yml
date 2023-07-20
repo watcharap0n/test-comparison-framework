@@ -80,6 +80,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install flake8
           pip install cryptography==38.0.4
           if [ -f unit-test-service/requirements.txt ]; then pip install -r unit-test-service/requirements.txt; fi
 
@@ -90,7 +91,7 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Unit Test with unittest
+      - name: Unit Test with pytest
         env:
           PYTHONPATH: ${{ vars.PYTHONPATH }}
           USER_AGENT: ${{ secrets.USER_AGENT }}
@@ -99,6 +100,8 @@ jobs:
           echo "$PYTHONPATH $USER_AGENT $PWD"
           python -m unittest unit-test-service/tests_unittest/conftest.py -vv
           nose2 -s unit-test-service tests_unittest.conftest -vv
+  
+  
 
   dockerImage:
     name: Push Docker image to Docker hub
