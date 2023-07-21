@@ -37,6 +37,7 @@ def client(mock_mongo_client):
     return TestClient(app)
 
 
+
 @pytest.fixture
 def authorization_header():
     return {'user-agent': os.environ.get('USER_AGENT')}
