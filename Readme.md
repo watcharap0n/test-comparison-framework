@@ -13,8 +13,7 @@ follows:
 - unittest: Contains the test scripts and modules implemented using Python's built-in unittest framework.
 - pytest: Includes the test scripts and modules implemented using the pytest framework.
 - nose: Consists of the test scripts and modules implemented using the nose testing framework.
-- robot: Contains the test scripts implemented using the Robot Framework.
-- doctest: Includes the doctest examples embedded within the API documentation.
+- tox: Contains the test scripts implemented using the Tox Framework.
 
 Each framework implementation is self-contained within its respective directory, allowing for easy navigation and
 comparison between the different approaches.
@@ -26,6 +25,7 @@ To execute the tests for each framework, follow the instructions below:
 **1. unittest: Navigate to the unittest directory and run the test script using the Python interpreter:**
 
     $ export PYTHONPATH=unit-test-service
+    $ python -m unittest unit-test-service/tests_unittest/conftets.py -vv
 
 **2. pytest: Navigate to the pytest directory and run the pytest command:**
 
@@ -35,12 +35,12 @@ To execute the tests for each framework, follow the instructions below:
 **3. nose: Navigate to the nose directory and run the nosetests command:**
 
     $ export PYTHONPATH=unit-test-service
-    $ nosetests
+    $ nose2 unit-test-service/tests_pytest
 
-**4. robot: Navigate to the robot directory and run the robot command:**
+**4. tox: Navigate to the robot directory and run the robot command:**
 
     $ export PYTHONPATH=unit-test-service
-    $ robot tests
+    $ tox -r
 
 ## Documentation
 
